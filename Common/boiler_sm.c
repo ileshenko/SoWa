@@ -13,8 +13,8 @@
 
 static int sm_toggle_flg;
 
-#define D_THEMP_ON 18 //Delta for pumping ON
-#define D_THEMP_OFF 16 // Delta for pumping OFF
+#define D_THEMP_ON 8 //Delta for pumping ON
+#define D_THEMP_OFF 7 // Delta for pumping OFF
 
 heater_sm_t curr_state;
 
@@ -40,7 +40,7 @@ void sm_loop(void)
 }
 #endif
 
-#define DEMO
+// #define DEMO
 #ifdef DEMO
 
 #define IDLE_MIN_TIME  0, 20
@@ -50,7 +50,7 @@ void sm_loop(void)
 
 #else
 #define IDLE_MIN_TIME  0, 60
-#define PUMPING_MIN_TIME  0, 1
+#define PUMPING_MIN_TIME  0, 5
 #define IDLE_MAX_TIME   24,0
 #define PUMPING_MAX_TIME 0,600
 #endif
