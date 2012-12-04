@@ -74,7 +74,7 @@ int btn220(void)
 {
 	if (btn220_f)
 		btn220_f--;
-	return btn220_f || !(PxIN & BTN220B);
+	return (btn220_f > 5) || !(PxIN & BTN220B);
 }
 #endif
 
@@ -115,7 +115,8 @@ __interrupt void Port_2(void)
 #ifdef BTN220B
 	if (PxIFG & BTN220B)
 	{
-		btn220_f = 2;
+		if ( btn220_f < 10 )
+		btn220_f++;
 		PxIFG &= ~BTN220B;
 	}
 #endif
