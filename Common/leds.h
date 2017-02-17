@@ -5,6 +5,7 @@
 
 void leds_init(void);
 void leds_hello(void);
+void leds_error_indicate(void);
 void led_toggle(void);
 
 #ifdef OUT1B

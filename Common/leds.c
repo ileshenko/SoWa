@@ -47,6 +47,19 @@ void out2_turn(int on)
 }
 #endif
 
+void leds_error_indicate(void)
+{
+	int i;
+	volatile int j;
+
+	for (i = 0; i < 9; i++)
+	{
+		led_toggle();
+		j = 0x7fff;
+		while(--j);
+	}
+}
+
 void leds_hello(void)
 {
 	int i;

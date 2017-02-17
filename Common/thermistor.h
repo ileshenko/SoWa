@@ -21,6 +21,9 @@ void themps_update(void);
 /* Does not actually measure themperatures. Call themps_update() before */
 int themp_delta_get(void);
 
+/* Returns error in case one of thermistors is shorten or missing */
+int themp_is_err(void);
+
 extern int t[];
 
 #endif

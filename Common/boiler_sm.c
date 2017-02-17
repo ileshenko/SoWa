@@ -96,6 +96,11 @@ static void sm_set(heater_sm_t state)
 		pump_on();
 		timer_set_alarm(PUMPING_MAX_TIME);
 		break;
+
+	case SM_ERROR:
+		timer_set_alarm(0, 3); /* 3 seconds error indication */
+		leds_error_indicate();
+		break;
 	}
 	curr_state = state;
 }
@@ -134,7 +139,9 @@ void sm_sycle(void)
 		break;
 
 	case SM_IDLE:
-		if (themp_delta_get() >= D_THEMP_ON)
+		if (themp_is_err())
+			sm_set(SM_ERROR);
+		else if (themp_delta_get() >= D_THEMP_ON)
 			sm_set(SM_PUMPING_MIN);
 		else if (alarm())
 			sm_set(SM_CLEANING);
@@ -154,6 +161,14 @@ void sm_sycle(void)
 		if (alarm())
 			sm_set(SM_IDLE_MIN);
 		break;
-	}
 
+	case SM_ERROR:
+		if (!alarm()) /* Wait for timeout */
+			break;
+		if (themp_is_err()) /* Error is not resolved */
+			sm_set(SM_ERROR);
+		else
+			sm_set(SM_IDLE);
+		break;
+	}
 }

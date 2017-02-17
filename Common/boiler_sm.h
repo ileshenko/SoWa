@@ -6,7 +6,8 @@ typedef enum {
 	SM_IDLE = 1,
 	SM_PUMPING_MIN = 2,
 	SM_PUMPING = 3,
-	SM_CLEANING = 4
+	SM_CLEANING = 4,
+	SM_ERROR = 5,
 } heater_sm_t;
 
 extern heater_sm_t curr_state;

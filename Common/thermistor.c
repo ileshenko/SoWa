@@ -168,6 +168,11 @@ void themps_update(void)
 //    temp_ctl = themp_get(SEN_CTL);
 }
 
+int themp_is_err(void)
+{
+    return !t[T_UP] || !t[T_DOWN] || t[T_UP]==140 || t[T_DOWN]==140;
+}
+
 int themp_delta_get(void)
 {
     if (!t[T_UP] || !t[T_DOWN])
