@@ -9,4 +9,4 @@ void timer_set_alarm(char hours, int secs );
 
 extern unsigned long jiffies;
 
-#endif /*_TIMER_H_*/
+#endif

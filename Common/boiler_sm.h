@@ -14,4 +14,4 @@ extern heater_sm_t curr_state;
 void sm_init(void);
 void sm_sycle(void);
 
-#endif /*_BOILER_SM_H_*/
+#endif

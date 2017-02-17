@@ -23,4 +23,4 @@ int themp_delta_get(void);
 
 extern int t[];
 
-#endif /*_THERMISTOR_H_*/
+#endif

@@ -21,7 +21,6 @@
 #error define BTN port
 #endif
 
-
 //#define BTN_TOGGLE (1<<3)
 
 #ifdef CNT1B

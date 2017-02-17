@@ -17,11 +17,11 @@ void uart_init(void)
 	BCSCTL1 = CALBC1_1MHZ; 		    // Set range
   	DCOCTL = CALDCO_1MHZ;  		    // Set DCO step + modulation
 #endif
-  	
+
 	/* Port 1.2 (Rx) may be overridden by ADC if we need output only */
 	P1SEL |= BIT1 + BIT2; //select RXD and TXD for UART
 	P1SEL2 |= BIT1 + BIT2; //select RXD and TXD for UART
-	
+
 	UCA0CTL0 = 0; /* UCSYNC = 0 (ASYNC), UCMODE = 0 (UART), UCSPB = 0 (one stop) ... */
 	UCA0CTL1 |= UCSSEL_3; /* SMCLK (1MHz)*/
 
@@ -42,17 +42,17 @@ void uart_init(void)
 #else
 #error Unknow Boudrate
 #endif
-	
+
 	UCA0CTL1 &= ~UCSWRST; //toggle SW Reset off
 }
 
 char *cat_ul(char *buf, unsigned long val)
 {
 	unsigned long cutoffVal = val/10;
-	
+
 	if (cutoffVal)
 		buf = cat_ul(buf, cutoffVal);
-	
+
 	*buf = '0' + val%10;
 
 	return buf+1;
@@ -76,7 +76,7 @@ void uart_report(char *line)
 	cnt1_A = cnt1_a;
 	cnt1_a = 0;
 	_EINT();
-	
+
 	buf = cat_ul(buf, jiffies);
 	buf = cat_str(buf, "\t");
 	buf = cat_ul(buf, cnt1_A);
@@ -93,7 +93,7 @@ void uart_report(char *line)
 #endif
 
 	buf = cat_str(buf, "\r\n");
-	*buf = 0; 
+	*buf = 0;
 #endif
 	i = 0;
 	IE2 |= UCA0TXIE;

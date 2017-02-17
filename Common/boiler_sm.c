@@ -21,11 +21,9 @@ heater_sm_t curr_state;
 #if 0
 display_stat_t display_state;
 
-
 void sm_loop(void)
 {
 	static unsigned long old_jiffies;
-
 
 	if (old_jiffies != jiffies)
 	{
@@ -113,7 +111,6 @@ void sm_sycle(void)
 	if (master_btn())
 		sm_toggle();
 
-
 	if (sm_toggle_flg)
 	{
 		sm_toggle_flg = 0;
@@ -142,21 +139,21 @@ void sm_sycle(void)
 		else if (alarm())
 			sm_set(SM_CLEANING);
 		break;
-		
+
 	case SM_PUMPING_MIN:
 		if (alarm())
 			sm_set(SM_PUMPING);
 		break;
-		
+
 	case SM_PUMPING:
 		if ((themp_delta_get() <= D_THEMP_OFF) || alarm())
 			sm_set(SM_IDLE_MIN);
 		break;
-		
+
 	case SM_CLEANING:
 		if (alarm())
 			sm_set(SM_IDLE_MIN);
 		break;
 	}
-	
+
 }

@@ -14,5 +14,4 @@ void out1_turn(int on);
 void out2_turn(int on);
 #endif
 
-
-#endif /*_LEDS_H_*/
+#endif

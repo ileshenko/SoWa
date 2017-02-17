@@ -26,7 +26,7 @@ void timer_init(void)
 
     CCTL0 = CCIE;                             // CCR0 interrupt enabled
     CCR0 += 100;
-    
+
     jiffies = 0;
 }
 
@@ -79,8 +79,8 @@ __interrupt void main_timer(void)
 	divider++;
 	if (divider & 0x7)
 		return;
-		
-	jiffies++;
+
+	jiffies++; /* HZ == 1 */
 
 #ifdef USE_ALARM
 	if (timer.stat == TIMER_RUN)

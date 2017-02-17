@@ -13,4 +13,4 @@ typedef enum {
 extern heater_sm_t curr_state;
 #endif
 
-#endif /*_MAIN_H_*/
+#endif

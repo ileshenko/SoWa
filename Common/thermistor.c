@@ -103,10 +103,10 @@ void thermistor_init(void)
     ADC10CTL0 = ADC10SHT_2 + MSC + ADC10ON; //  ??? SHT2? IE???
     ADC10AE0 = TS /*BIT(UP_PORT) + BIT(BOTTOM_PORT) + BIT(CTL_PORT)*/; // ADC ports option select
     ADC10DTC1 = BSIZE;                           // Conversions count
-    
+
     for (i = 0; i < T_CNT; i++)
     	t[i] = 0;
-    
+
 //    ntc=ntc1033470;
 //    ntc=ntc2233600;
 }
@@ -115,17 +115,17 @@ static inline unsigned int get_average(void)
 {
 	unsigned int ret = 0;
 	int i;
-	
+
 	for (i = 0; i< BSIZE; i++)
 		ret += adc_buff[i];
-		
+
 	return ret>>B_SHIFT;
 }
 
 static inline int thermistor_ntc(unsigned int idx, unsigned int raw)
 {
 	unsigned int ret;
-	
+
 	for (ret = 0; ret < MAXTEMP; ret++)
 	{
 		if (ntc[idx][ret] <= raw)
@@ -151,9 +151,9 @@ static int themp_get(int idx)
     ADC10CTL0 |= ENC + ADC10SC;             // Sampling and conversion ready
     while (!(ADC10CTL0 & ADC10IFG));               // Wait if ADC10 core is active
     ADC10CTL0 &= ~ADC10IFG;					// Clear interrupt flag
-    
+
     raw_val = get_average();
-		
+
 	return  thermistor_ntc(idx, raw_val);
 }
 
@@ -172,6 +172,6 @@ int themp_delta_get(void)
 {
     if (!t[T_UP] || !t[T_DOWN])
     	return 0;
-    	
+
     return t[T_UP] - t[T_DOWN];
 }

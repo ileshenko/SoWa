@@ -5,7 +5,6 @@
 /* Timer section */
 #define USE_ALARM
 
-
 /* UART section */
 #define USB_BAUDRATE 115200
 

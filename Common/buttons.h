@@ -17,4 +17,4 @@ extern unsigned int cnt2_a, cnt2_b;
 int btn220(void);
 #endif
 
-#endif /*_BUTTONS_H_*/
+#endif

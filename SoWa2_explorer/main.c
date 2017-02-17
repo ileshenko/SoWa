@@ -1,6 +1,6 @@
 /******************************************************************************
  *  Sun Heater controller - explorer
- * 
+ *
  * inputs
  *  Temperature:
  *   P1.0 ADC - T1 Upper sensor
@@ -18,7 +18,7 @@
  *	Button
  *	 P2.7 GPIO - BTN - TBD
  *	 P2.5 GPIO - 220V
- * 
+ *
  * outputs
  *  LEDS
  * 	 P2.6 PIN 18 - LED
@@ -29,8 +29,8 @@
  *
  *  UART
  *   P1.2 UART_TX
- * 
- * 
+ *
+ *
  ******************************************************************************/
 
 #include <msp430g2553.h>
@@ -57,7 +57,7 @@
 #define IDLE_MAX_TIME    0, 30
 #define PUMPING_MAX_TIME 0, 60
 
-#else 
+#else
 #define IDLE_MIN_TIME  0, 60
 #define PUMPING_MIN_TIME  0, 1
 #define IDLE_MAX_TIME   24,0
@@ -74,20 +74,20 @@ static void sm_set(heater_sm_t state)
 			led_off(LED_PUMP);
 			timer_set_alarm(IDLE_MIN_TIME);
 			break;
-			
+
 		case SM_IDLE:
 			timer_set_alarm(IDLE_MAX_TIME);
 			break;
-			
+
 		case SM_PUMPING_MIN:
 			led_on(LED_PUMP);
 			timer_set_alarm(PUMPING_MIN_TIME);
 			break;
-			
+
 		case SM_PUMPING:
 			timer_set_alarm(PUMPING_MAX_TIME);
 			break;
-			
+
 		case SM_CLEANING:
 			led_on(LED_PUMP);
 			timer_set_alarm(PUMPING_MAX_TIME);
@@ -112,7 +112,7 @@ void sm_init(void)
 void sm_loop(void)
 {
 	static unsigned long old_jiffies;
-	
+
 	switch (curr_state)
 	{
 	case SM_IDLE_MIN:
@@ -126,23 +126,23 @@ void sm_loop(void)
 		else if (alarm())
 			sm_set(SM_CLEANING);
 		break;
-		
+
 	case SM_PUMPING_MIN:
 		if (alarm())
 			sm_set(SM_PUMPING);
 		break;
-		
+
 	case SM_PUMPING:
 		if ((themp_delta_get() <= D_THEMP_OFF) || alarm())
 			sm_set(SM_IDLE_MIN);
 		break;
-		
+
 	case SM_CLEANING:
 		if (alarm())
 			sm_set(SM_IDLE_MIN);
 		break;
 	}
-	
+
 	if (sm_toggle_flg)
 	{
 		sm_toggle_flg = 0;
@@ -157,7 +157,7 @@ void sm_loop(void)
 			break;
 		}
 	}
-	
+
 	if (old_jiffies != jiffies)
 	{
 		themps_update();
@@ -167,7 +167,7 @@ void sm_loop(void)
 		if (display_state >= DISP_LAST)
 			display_state = DISP_NONE;
 	}
-	display_pulse();	
+	display_pulse();
 }
 #endif
 
@@ -230,7 +230,6 @@ void main(void)
 		uart_report(log());
 		timer_wait();
 	}
-
 
 //
 
